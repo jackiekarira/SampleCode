@@ -128,6 +128,7 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     //close text input
+    [self doneButtonCliked];
     [textField resignFirstResponder];
     
     [self.photoArray removeAllObjects];
@@ -140,6 +141,11 @@
         [self.photoArray removeAllObjects];
         [self.photoArray addObjectsFromArray:results];
         
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //reload collectionview when json data downloads
+            [self.photoCollectionView reloadData];
+        });
+        
         //download thumbnail images from json data
         [flick getThumbnailImages:self.photoArray completionBlock:^(NSUInteger index) {
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
@@ -149,10 +155,6 @@
             });
         }];
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            //reload collectionview when json data downloads
-            [self.photoCollectionView reloadData];
-        });
     }];
     return YES;
 }
