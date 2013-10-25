@@ -72,12 +72,10 @@
 
 }
 
-+ (NSString *)flickrPhotoURLForFlickrPhoto:(FlickrPhoto *) flickrPhoto size:(NSString *) size
++ (NSString *)flickrPhotoURLForFlickrPhoto:(FlickrPhoto *) flickrPhoto
 {
-    if(!size)
-    {
-        size = @"m";
-    }
+    NSString *size = @"m";
+    
     return [NSString stringWithFormat:@"http://farm%d.staticflickr.com/%d/%lld_%@_%@.jpg",flickrPhoto.farm,flickrPhoto.server,flickrPhoto.photoID,flickrPhoto.secret,size];
 }
 
@@ -85,7 +83,7 @@
 {
     //enumerate over photo array with data and download images
     [imageArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSString *searchURL = [FlickrController flickrPhotoURLForFlickrPhoto:obj size:@"m"];
+        NSString *searchURL = [FlickrController flickrPhotoURLForFlickrPhoto:obj];
         NSURL *url = [NSURL URLWithString:searchURL];
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {

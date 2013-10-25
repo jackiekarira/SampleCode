@@ -6,19 +6,18 @@
 //  Copyright (c) 2013 Jackie Karira. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "MainScreenViewController.h"
 #import "FlickrPhoto.h"
-#import "FlickrPhotoCollectionView.h"
 #import "FlickrPhotoCollectionViewCell.h"
 #import "FlickrController.h"
 
 #define kCellId @"photoCellId"
 
-@interface ViewController ()
+@interface MainScreenViewController ()
 
 @end
 
-@implementation ViewController
+@implementation MainScreenViewController
 
 - (void)viewDidLoad
 {
@@ -56,8 +55,10 @@
     //create collection view
     UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
     layout.itemSize = CGSizeMake(100, 100);
+    [layout setSectionInset:UIEdgeInsetsMake(0, 30, 0, 30)];
     layout.minimumInteritemSpacing = 12.0f;
-    self.photoCollectionView = [[FlickrPhotoCollectionView alloc] initWithFrame:CGRectMake(0, 50, 320, 430) collectionViewLayout:layout];
+    CGRect bounds = [[UIScreen mainScreen] bounds];
+    self.photoCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 50, 320, bounds.size.height - 50) collectionViewLayout:layout];
     self.photoCollectionView.backgroundColor = [UIColor whiteColor];
     self.photoCollectionView.delegate = self;
     self.photoCollectionView.dataSource = self;
